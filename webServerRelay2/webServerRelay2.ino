@@ -211,6 +211,7 @@ void updateThingSpeak()
     client.print(aux.length());
     client.print("\n\n");
     client.print(aux);
+    client.stop();
   }
 }
 
