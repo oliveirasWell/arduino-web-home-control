@@ -1,0 +1,310 @@
+	<!DOCTYPE html>
+	<html>
+	<head>
+	  <meta charset="utf-8">
+	  		<meta name="viewport" content="width=device-width, initial-scale=1">
+	  		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+			<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+			<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+			<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<!---->
+
+
+			<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+			<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
+	  <title>Arduino Web Control</title>
+
+	   <style type="text/css">
+
+		/*body {
+	            background-color: #f0f0f2;
+	            margin: 0;
+	            padding: 0;
+	            font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	        }
+	        #normal {
+		       vertical-align: middle;
+		       position:relative;
+		       bottom:0%;
+		   	   top:0%;
+	           width: 33%;
+	           height: 33%;
+	           margin: 1em auto;
+	           padding: 50px;
+	           background-color: #fff;
+	           border-radius: 1em;
+
+	        }*/
+
+
+	        .normal {
+	            color: black;
+	            background-color: #F7F7F7;
+		    	margin: 1em auto;
+	            padding: 20px;
+	            border-radius: 1em;
+		    	border-width: 2%;
+	        }
+
+	        .imageSize{
+	        	height:150px;
+	        }
+
+	 /*<!--       
+		.temperatura {
+		    font-size: 40px;
+		    width: 200px;
+		    height: 150px;
+	            color: black;
+	            text-align: center;
+	            background-color: #f0f0f2;
+
+
+		    margin: 1em auto;
+	            padding: 20px;
+	            border-radius: 1em;
+
+		    line-height:150px;
+	        }
+
+	*/
+
+	        a:link, a:visited {
+	            color: #38488f;
+	            text-decoration: none;
+	        }
+
+	        @media (max-width: 700px) {
+
+	            body {
+	                background-color: #fff;
+	            }
+
+	            div {
+	                width: auto;
+	                margin: 0 auto;
+	                border-radius: 0;
+	                padding: 1em;
+	            }
+	        }
+
+	       #volume {
+			    /*position: absolute;*/
+			    /*left: 24px;*/
+			    margin: 0 auto;
+			    height:15px;
+			    width: 70%;	
+			    background: grey; /*url('http://iviewsource.com/exercises/audioslider/images/volume-empty.png') no-repeat left top;*/
+			  	border: none;
+			  	outline: none;
+			}
+
+			#volume .ui-slider-range-min {
+			    height:15px;
+			    width: 70%;
+			    position: absolute;
+			    background: black; /*url('http://iviewsource.com/exercises/audioslider/images/volume-full.png') no-repeat left top;*/
+			  	border: none;
+			 	outline: none;
+			}
+
+			#volume .ui-slider-handle {
+			    /*width: 15px;
+			    height:15px;*/
+			    background: red; /*url('http://iviewsource.com/exercises/audioslider/images/volume-knob.png') no-repeat left top;*/
+			    /*position: absolute;
+			    margin-left: -15px;*/
+			    cursor: pointer;
+			    outline: none;
+			    border: none;
+			    border-radius: 2em;
+			}
+
+			#ex1Slider .slider-selection {
+				background: #BABABA;
+			}
+
+	    </style> 
+
+	    <script language="javascript" type="text/javascript">
+	        var light = 0;
+	        var fan = 0;
+	        var temperature = 0;
+	        var humidity = 0;
+	        var stringIN = "";
+
+	        function toGet(charIN) {
+	            //alert(charIN);
+
+	            $.get("http://192.168.1.177:1212/" + charIN);
+
+			    if(charIN == 'a'){
+					light = !light;
+					atualizaLight();
+			    }
+			    else if (charIN == 'b'){
+					fan = !fan;
+					atualizaFan();
+			    }		
+	        }
+		
+			function toOff(){
+				$.ajax({
+				  url: 'desliga.php',
+				  success: function(data){}
+				});
+			}
+
+
+			function atualizaLight(){
+					if(light == 0) {
+							$('#s_li').bootstrapToggle('on');
+				        	//document.getElementById('LI').innerHTML = "on";
+					}else{
+							$('#s_li').bootstrapToggle('off');
+				        	//document.getElementById('LI').innerHTML = "off";
+
+				    }
+			}
+
+			function atualizaFan(){
+					if(fan == 0){
+							$('#s_fa').bootstrapToggle('on');
+				        	//document.getElementById('FA').innerHTML = "on";
+					}else{
+							$('#s_fa').bootstrapToggle('off');
+				       		 //document.getElementById('FA').innerHTML = "off";
+			}
+		}
+
+			function startTime(autoChar){
+				//if(autoChar == '2'){ $('.slider').slider(); setTimeout(function(){startTime('1'); }, 2000);}
+				$.ajax({
+				  url: 'get.php',
+				  success: function(data){
+					//alert(data);
+					var txt = data;		    
+					txt = txt.split("\n");
+					light = txt[0];
+					fan = txt[1];
+					temperature = txt[2];
+					humidity = txt[3];
+					
+					atualizaLight();
+					atualizaFan();
+
+				    document.getElementById('TE').innerHTML =  Math.round(temperature.trim()) + 'º';
+				    document.getElementById('HU').innerHTML = Math.round(humidity.trim())+ '%';
+
+					if(autoChar == '1') setTimeout(function(){startTime('1')}, 2000);
+				  }
+				});
+			}
+	    </script>
+
+
+	</head>
+
+	<body>
+	<body onload="startTime('1')">
+
+	    <!--<div id ="normal" style="text-align:center;">-->
+	    <div class="container">
+	    <div class="jumbotron">
+	        <h1 style="text-align:center;" >Arduino Web Control 3.0</h1>
+
+			<div class="im-centered">
+				<div class="row">
+			        	<div class="col-md-4 col-xs-12">
+						<div class="normal">
+							<h1 id="TE" class="text-center"><h1>
+							<h1 id="HU" class="text-center"><h1>
+						</div>
+					</div>
+					<div class="col-md-4 col-xs-12">
+						<div class="normal" >
+							<!--<div class="text-center" > <h1 id="LI"> </h1> </div>-->
+							<input type="image" onclick="toGet('a');" src="bulb.png" class="img-responsive center-block imageSize">
+							<div class="text-center" onClick="$.get('http://192.168.1.177:1212/a')"><input id="s_li" type="checkbox" data-toggle="toggle" ></div>
+							
+						</div>
+					</div>
+
+					<div class="col-md-4 col-xs-12">
+						<div class="normal">
+							
+							<!--<div class="text-center" > <h1 id="FA"> </h1> </div>-->	
+							<input type="image" onclick="toGet('b');" src="fan.png" class="img-responsive center-block imageSize">
+							<div class="text-center"  onClick="$.get('http://192.168.1.177:1212/b')"><input id="s_fa" type="checkbox" data-toggle="toggle"></div>
+						</div>
+					</div>
+
+					<div class="col-md-4 col-xs-12">
+						<div class="normal" onclick="toOff()">
+							<input type="image" src="off.png" class="img-responsive center-block imageSize">
+							<div class="text-center"><input id="s_li" type="checkbox" checked data-toggle="toggle" ></div>
+							<h3 class="text-center">Turn PC Off</h3>
+						</div>
+					</div>
+
+					<div class="col-md-4 col-xs-12">
+						<div class="normal">
+								<div  onClick="audio()" >
+							    	<input type="range" name="points" id="points" value="100" min="0" max="100">
+								</div>
+									<h2 class="text-center">Audio PC<h1>
+								<div class="text-center">
+									<span class="glyphicon glyphicon-volume-off" 	aria-hidden="true" onClick="mute()"></span>
+									<span class="glyphicon glyphicon-volume-down" 	aria-hidden="true"></span>
+									<span class="glyphicon glyphicon-volume-up" 	aria-hidden="true"></span>
+								</div>
+						</div>
+					</div>
+
+
+					<div class="col-md-4 col-xs-12">
+						<div class="normal">
+								<div>
+							    	<button onclick="myFunction()">Turn Off Monitor</button>
+								</div>
+									<h2 class="text-center" id="demo"><h1>
+						</div>
+					</div>
+	
+
+				</div>
+			</div>
+		</div>
+		
+		<script>
+		function myFunction() {
+				$.ajax({
+				  url: 'monitor.php',
+				  success: function(data){ alert(data);}
+				});
+		}
+
+
+		function audio(){
+			var x = document.getElementById("points").value;
+			 $.ajax({
+			  type: "POST",
+			  url: "some.php",
+			  data: { value: x }
+			  }).done(function( msg ) {
+			  alert( "Data Saved: " + msg );
+			});
+		}
+
+		function mute(){
+				$.ajax({
+				  url: 'mute.php',
+				  success: function(data){ alert(data);}
+				});
+		}
+		</script>
+
+
+
+	</body>        
+	</html>
