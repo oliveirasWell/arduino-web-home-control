@@ -212,6 +212,16 @@ void updateThingSpeak()
     client.print("\n\n");
     client.print(aux);
     client.stop();
+
+    //to do
+    //Serial 
+    // Connected
   }
+  /*
+    to do
+    else
+    Not Connected
+
+  */
 }
 
