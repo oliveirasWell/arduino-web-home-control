@@ -27,7 +27,8 @@ Home control, controls your room light, fan, pc volume and power with an arduino
 
 ##### Owner 
 
-Wellington Oliveira: well.oliveira.snt@gmail.com
+Wellington Oliveira
 
+* Mail: well.oliveira.snt@gmail.com
 * Facebook: well.oliveira.snts
 * Twitter (Portugueses shit talks): oliveiraswell
