@@ -175,7 +175,7 @@ void loop() {
     Serial.println(" *C");
   */
   
-  if(counter==10000){
+  if(counter==1800000){
     counter=0;
     Serial.println("Enviado ao ThingSpeak");
     updateThingSpeak();
