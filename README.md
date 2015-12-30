@@ -8,14 +8,14 @@ Home control, controls your room light, fan, pc volume and power with an arduino
 
 ### Componetes needed ###
 
-##### Hardware ####
+##### Hardware #####
 
 * Arduino
 * Arduino Ethernet Shield
 * Arduino Relay Module
 * DHT11 temperaute sensor.
 
-#### Software ####
+##### Software #####
 
 * Windows OS
 * Apache server with php (xampp if you don't want trouble, but)
