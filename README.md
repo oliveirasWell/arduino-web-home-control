@@ -20,14 +20,10 @@ Home control, controls your room light, fan, pc volume and power with an arduino
 * Windows OS
 * Apache server with php (xampp if you don't want trouble, but)
 
-### Configuration ###
-
 ### Acess ###
 
 * Put the "webServer" folder int httpdocs folder in your Apache Server.
 * Acess in localhost/webcontrol
-
-### Who do I talk to? ###
 
 * Owner: Wellington Oliveira: well.oliveira.snt@gmail.com
 * Facebook: well.oliveira.snts
