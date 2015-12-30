@@ -11,8 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f41395d8-9837-468d-9cc8-60dc122e4e81" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webControl/index.html" afterPath="$PROJECT_DIR$/webControl/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webServerRelay2/webServerRelay2.ino" afterPath="$PROJECT_DIR$/webServerRelay2/webServerRelay2.ino" />
     </list>
     <ignored path="arduino-web-home-control.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -137,8 +135,8 @@
       <file leaf-file-name="webServerRelay2.ino" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webServerRelay2/webServerRelay2.ino">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2813411">
-              <caret line="75" column="4" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="4" />
+            <state vertical-scroll-proportion="2.1166182">
+              <caret line="213" column="6" selection-start-line="213" selection-start-column="6" selection-end-line="213" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -300,7 +298,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451507553028</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Guarda estado das luzes ou fan mesmo se cair a energia">
+      <created>1451510903094</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1451510903094</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -345,7 +349,8 @@
     <MESSAGE value="Clion 1" />
     <MESSAGE value="Release 1" />
     <MESSAGE value="Release 1.01" />
-    <option name="LAST_COMMIT_MESSAGE" value="Release 1.01" />
+    <MESSAGE value="Guarda estado das luzes ou fan mesmo se cair a energia" />
+    <option name="LAST_COMMIT_MESSAGE" value="Guarda estado das luzes ou fan mesmo se cair a energia" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -519,8 +524,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webServerRelay2/webServerRelay2.ino">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2813411">
-          <caret line="75" column="4" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="4" />
+        <state vertical-scroll-proportion="2.1166182">
+          <caret line="213" column="6" selection-start-line="213" selection-start-column="6" selection-end-line="213" selection-end-column="6" />
           <folding />
         </state>
       </provider>
