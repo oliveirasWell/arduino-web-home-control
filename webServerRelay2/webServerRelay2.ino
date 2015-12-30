@@ -175,14 +175,14 @@ void loop() {
     Serial.println(" *C");
   */
   
-  if(counter==1800000){
+/*  if(counter==1800000){
     counter=0;
     Serial.println("Enviado ao ThingSpeak");
     updateThingSpeak();
   }else{
     delay(1);
-    counter++;
-  }
+   counter++;
+  } */00
 }
 
 float CheckTemp(){

@@ -1,310 +1,304 @@
-	<!DOCTYPE html>
-	<html>
-	<head>
-	  <meta charset="utf-8">
-	  		<meta name="viewport" content="width=device-width, initial-scale=1">
-	  		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-			<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-			<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-			<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<!---->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--JQuery -->
+    <script src="resources/jquery/jquery-1.11.3.min.js"></script>
+
+    <!--CSS Bootstrap -->
+    <link href="resources/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="resources/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+
+    <style>
+        .col-centered{
+            border:1px  cornflowerblue;
+            float: none;
+            margin: 0 auto;
+        }
+        .vcenter {
+            display: inline-block;
+            vertical-align: middle;
+            float: none;
+        }
+
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+            margin: 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .back {
+            height: 100%;
+            background: grey; /* For browsers that do not support gradients */
+            background: linear-gradient(#315481, #918e82 ); /* Standard syntax (must be last) */
+        }
+
+        .btnLgg {
+            width: 150px;
+            padding: 10px auto;
+        }
+
+        input[type=range]{
+            -webkit-appearance: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 300px;
+            height: 5px;
+            background: #ddd;
+            border: none;
+            border-radius: 3px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #315481;
+            margin-top: -4px;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            background: #ccc;
+        }
+
+    </style>
+
+    <title>Arduino Web Control</title>
+    <script language="javascript" type="text/javascript">
+        var light = 0;
+        var fan = 0;
+        var temperature = 0;
+        var humidity = 0;
+        var stringIN = "";
+
+        function toGet(charIN) {
+            //alert(charIN);
+
+            $.get("http://192.168.1.177:1212/" + charIN);
+
+            if(charIN == 'a'){
+                light = !light;
+                atualizaLight();
+            }
+            else if (charIN == 'b'){
+                fan = !fan;
+                atualizaFan();
+            }
+        }
+
+        function toOff(){
+            $.ajax({
+                url: 'desliga.php',
+                success: function(data){}
+            });
+        }
 
 
-			<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
-			<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
-	  <title>Arduino Web Control</title>
+        function atualizaLight(){
+            if(light == 0) {
+                document.getElementById('s_li').innerHTML = "on";
+            }else{
+                document.getElementById('s_li').innerHTML = "off";
+            }
+        }
 
-	   <style type="text/css">
+        function atualizaFan(){
+            if(fan == 0){
+                document.getElementById('s_fa').innerHTML = "on";
+            }else{
+                document.getElementById('s_fa').innerHTML = "off";
+            }
+        }
 
-		/*body {
-	            background-color: #f0f0f2;
-	            margin: 0;
-	            padding: 0;
-	            font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	        }
-	        #normal {
-		       vertical-align: middle;
-		       position:relative;
-		       bottom:0%;
-		   	   top:0%;
-	           width: 33%;
-	           height: 33%;
-	           margin: 1em auto;
-	           padding: 50px;
-	           background-color: #fff;
-	           border-radius: 1em;
+        function startTime(autoChar){
+            //if(autoChar == '2'){ $('.slider').slider(); setTimeout(function(){startTime('1'); }, 2000);}
+            $.ajax({
+                url: 'get.php',
+                success: function(data){
+                    //alert(data);
+                    var txt = data;
+                    txt = txt.split("\n");
+                    light = txt[0];
+                    fan = txt[1];
+                    temperature = txt[2];
+                    humidity = txt[3];
 
-	        }*/
+                    atualizaLight();
+                    atualizaFan();
 
+                    document.getElementById('TE').innerHTML =  Math.round(temperature.trim()) + 'º';
+                    document.getElementById('HU').innerHTML = Math.round(humidity.trim())+ '%';
 
-	        .normal {
-	            color: black;
-	            background-color: #F7F7F7;
-		    	margin: 1em auto;
-	            padding: 20px;
-	            border-radius: 1em;
-		    	border-width: 2%;
-	        }
+                    if(autoChar == '1') setTimeout(function(){startTime('1')}, 10000);
+                }
+            });
+        }
 
-	        .imageSize{
-	        	height:150px;
-	        }
-
-	 /*<!--       
-		.temperatura {
-		    font-size: 40px;
-		    width: 200px;
-		    height: 150px;
-	            color: black;
-	            text-align: center;
-	            background-color: #f0f0f2;
+        function monitor() {
+            $.ajax({
+                url: 'monitor.php',
+                success: function(data){ alert(data);}
+            });
+        }
 
 
-		    margin: 1em auto;
-	            padding: 20px;
-	            border-radius: 1em;
+        function audio(){
+            var x = document.getElementById("points").value;
+            $.ajax({
+                type: "POST",
+                url: "some.php",
+                data: { value: x }
+            }).done(function( msg ) {
+                alert( "Data Saved: " + msg );
+            });
+        }
 
-		    line-height:150px;
-	        }
+        function mute(){
+            $.ajax({
+                url: 'mute.php',
+                success: function(data){ alert(data);}
+            });
+        }
 
-	*/
-
-	        a:link, a:visited {
-	            color: #38488f;
-	            text-decoration: none;
-	        }
-
-	        @media (max-width: 700px) {
-
-	            body {
-	                background-color: #fff;
-	            }
-
-	            div {
-	                width: auto;
-	                margin: 0 auto;
-	                border-radius: 0;
-	                padding: 1em;
-	            }
-	        }
-
-	       #volume {
-			    /*position: absolute;*/
-			    /*left: 24px;*/
-			    margin: 0 auto;
-			    height:15px;
-			    width: 70%;	
-			    background: grey; /*url('http://iviewsource.com/exercises/audioslider/images/volume-empty.png') no-repeat left top;*/
-			  	border: none;
-			  	outline: none;
-			}
-
-			#volume .ui-slider-range-min {
-			    height:15px;
-			    width: 70%;
-			    position: absolute;
-			    background: black; /*url('http://iviewsource.com/exercises/audioslider/images/volume-full.png') no-repeat left top;*/
-			  	border: none;
-			 	outline: none;
-			}
-
-			#volume .ui-slider-handle {
-			    /*width: 15px;
-			    height:15px;*/
-			    background: red; /*url('http://iviewsource.com/exercises/audioslider/images/volume-knob.png') no-repeat left top;*/
-			    /*position: absolute;
-			    margin-left: -15px;*/
-			    cursor: pointer;
-			    outline: none;
-			    border: none;
-			    border-radius: 2em;
-			}
-
-			#ex1Slider .slider-selection {
-				background: #BABABA;
-			}
-
-	    </style> 
-
-	    <script language="javascript" type="text/javascript">
-	        var light = 0;
-	        var fan = 0;
-	        var temperature = 0;
-	        var humidity = 0;
-	        var stringIN = "";
-
-	        function toGet(charIN) {
-	            //alert(charIN);
-
-	            $.get("http://192.168.1.177:1212/" + charIN);
-
-			    if(charIN == 'a'){
-					light = !light;
-					atualizaLight();
-			    }
-			    else if (charIN == 'b'){
-					fan = !fan;
-					atualizaFan();
-			    }		
-	        }
-		
-			function toOff(){
-				$.ajax({
-				  url: 'desliga.php',
-				  success: function(data){}
-				});
-			}
+        window.onload = function(){
+            startTime('1');
+        };
+    </script>
+</head>
+<body class="back">
+<div class="container">
+    <nav class="navbar navbar-default" style="margin-top: 2%">
+        <div class="container-fluid">
+            <div class="navbar-header text-center" style="padding-left: 5%;" >
 
 
-			function atualizaLight(){
-					if(light == 0) {
-							$('#s_li').bootstrapToggle('on');
-				        	//document.getElementById('LI').innerHTML = "on";
-					}else{
-							$('#s_li').bootstrapToggle('off');
-				        	//document.getElementById('LI').innerHTML = "off";
+                <ul class="nav navbar-nav">
 
-				    }
-			}
+                    <li div class="navbar-brand visible-xs-block" style="margin-left: 17%;">
+                    </li>
+                    <li>
+                        <p class="navbar-brand" hef="#" id="TE">Loading Temperature</p>
+                    </li>
+                    <li>
+                        <p class="navbar-brand" hef="#" id="HU">Loading Humidity</p>
+                    </li>
+                </ul>
+            </div>
 
-			function atualizaFan(){
-					if(fan == 0){
-							$('#s_fa').bootstrapToggle('on');
-				        	//document.getElementById('FA').innerHTML = "on";
-					}else{
-							$('#s_fa').bootstrapToggle('off');
-				       		 //document.getElementById('FA').innerHTML = "off";
-			}
-		}
+            <div id="navbar" class="navbar-collapse collapse">
+                <a class="navbar-brand navbar-right" style="padding-right: 5%" href="#">Arduino Web Control</a>
+            </div>
+        </div>
+    </nav>
 
-			function startTime(autoChar){
-				//if(autoChar == '2'){ $('.slider').slider(); setTimeout(function(){startTime('1'); }, 2000);}
-				$.ajax({
-				  url: 'get.php',
-				  success: function(data){
-					//alert(data);
-					var txt = data;		    
-					txt = txt.split("\n");
-					light = txt[0];
-					fan = txt[1];
-					temperature = txt[2];
-					humidity = txt[3];
-					
-					atualizaLight();
-					atualizaFan();
+    <div class="jumbotron">
+        <div class="media row">
+            <div class="col-md-5 col-xs-12 list-group-item col-centered">
+                <div class="media-right media-middle">
+                    <img onclick="toGet('a');" src="bulb.png" width="75px;">
+                </div>
+                <div class="media-body text-center">
+                    <p></p>
+                    <div data-toggle="buttons" style="margin-top: 5%">
+                        <label class="btn btn-lg btn-primary btnLgg">
+                            <input type="checkbox" autocomplete="off">
+                            <label id="s_li">Light</label>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-				    document.getElementById('TE').innerHTML =  Math.round(temperature.trim()) + 'º';
-				    document.getElementById('HU').innerHTML = Math.round(humidity.trim())+ '%';
+        <div class="media row">
+            <div class=" col-md-5 col-xs-12 list-group-item col-centered">
+                <div class="media-right media-middle">
+                    <img onclick="toGet('b');" src="fan.png" width="75px;">
+                </div>
+                <div class="media-body text-center">
+                    <p></p>
+                    <div data-toggle="buttons" style="margin-top: 5%">
+                        <label class="btn btn-lg btn-primary btnLgg">
+                            <input type="checkbox" autocomplete="off" checked>
+                            <label id="s_fa">Fan</label>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-					if(autoChar == '1') setTimeout(function(){startTime('1')}, 2000);
-				  }
-				});
-			}
-	    </script>
+        <div class="media row">
+            <div class="col-md-5 col-xs-12 list-group-item col-centered">
+                <div class="media-right media-middle">
+                    <div class="text-center" onclick="toOff()">
+                        <img src="off.png" width="75px;">
+                    </div>
+                </div>
+                <div class="media-body text-center">
+                    <p>
+                    <div data-toggle="buttons" style="margin-top: 5%">
+                        <label class="btn btn-lg btn-primary btnLgg" onclick="toOff()">
+                            <input type="checkbox" autocomplete="off" > PC
+                        </label>
+                    </div>
+                    </p>
+                </div>
+            </div>
+        </div>
 
+        <div class="media row">
 
-	</head>
+            <div class="container col-md-5 col-xs-12 breadcrumb text-center col-centered  list-group-item">
 
-	<body>
-	<body onload="startTime('1')">
+                <div class="media-right media-middle">
+                    <img src="monitor.png" width="75px;">
+                </div>
 
-	    <!--<div id ="normal" style="text-align:center;">-->
-	    <div class="container">
-	    <div class="jumbotron">
-	        <h1 style="text-align:center;" >Arduino Web Control 3.0</h1>
+                <div class="media-body text-center" style="margin: 1%">
+                    <button class="btn btn-lg btn-primary btnLgg" onclick="monitor()">Monitor</button>
+                </div>
+            </div>
+        </div>
 
-			<div class="im-centered">
-				<div class="row">
-			        	<div class="col-md-4 col-xs-12">
-						<div class="normal">
-							<h1 id="TE" class="text-center"><h1>
-							<h1 id="HU" class="text-center"><h1>
-						</div>
-					</div>
-					<div class="col-md-4 col-xs-12">
-						<div class="normal" >
-							<!--<div class="text-center" > <h1 id="LI"> </h1> </div>-->
-							<input type="image" onclick="toGet('a');" src="bulb.png" class="img-responsive center-block imageSize">
-							<div class="text-center" onClick="$.get('http://192.168.1.177:1212/a')"><input id="s_li" type="checkbox" data-toggle="toggle" ></div>
-							
-						</div>
-					</div>
+        <div class="media row">
 
-					<div class="col-md-4 col-xs-12">
-						<div class="normal">
-							
-							<!--<div class="text-center" > <h1 id="FA"> </h1> </div>-->	
-							<input type="image" onclick="toGet('b');" src="fan.png" class="img-responsive center-block imageSize">
-							<div class="text-center"  onClick="$.get('http://192.168.1.177:1212/b')"><input id="s_fa" type="checkbox" data-toggle="toggle"></div>
-						</div>
-					</div>
+            <div class=" container col-md-5 col-xs-12 breadcrumb text-center col-centered  list-group-item">
 
-					<div class="col-md-4 col-xs-12">
-						<div class="normal" onclick="toOff()">
-							<input type="image" src="off.png" class="img-responsive center-block imageSize">
-							<div class="text-center"><input id="s_li" type="checkbox" checked data-toggle="toggle" ></div>
-							<h3 class="text-center">Turn PC Off</h3>
-						</div>
-					</div>
+                <div class="media-right media-middle">
+                    <img src="audio.png" width="75px;">
+                </div>
 
-					<div class="col-md-4 col-xs-12">
-						<div class="normal">
-								<div  onClick="audio()" >
-							    	<input type="range" name="points" id="points" value="100" min="0" max="100">
-								</div>
-									<h2 class="text-center">Audio PC<h1>
-								<div class="text-center">
-									<span class="glyphicon glyphicon-volume-off" 	aria-hidden="true" onClick="mute()"></span>
-									<span class="glyphicon glyphicon-volume-down" 	aria-hidden="true"></span>
-									<span class="glyphicon glyphicon-volume-up" 	aria-hidden="true"></span>
-								</div>
-						</div>
-					</div>
+                <div class="media-body text-center" style="margin: 1%">
+                    <p>
+                    <h4 class="">Volume</h4>
+                    <div onClick="audio()" style="width: 80%;margin: auto">
+                        <input type="range" name="points" id="points" value="100" min="0" max="100">
+                    </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-					<div class="col-md-4 col-xs-12">
-						<div class="normal">
-								<div>
-							    	<button onclick="myFunction()">Turn Off Monitor</button>
-								</div>
-									<h2 class="text-center" id="demo"><h1>
-						</div>
-					</div>
-	
-
-				</div>
-			</div>
-		</div>
-		
-		<script>
-		function myFunction() {
-				$.ajax({
-				  url: 'monitor.php',
-				  success: function(data){ alert(data);}
-				});
-		}
+    <footer class="footer">
+        <div class="container text-center">
+            <a href="https://bitbucket.org/oliveiraswell/arduino-web-home-control" class="text-muted ">well.oliveira.snt@gmail.com</a>
+        </div>
+    </footer>
 
 
-		function audio(){
-			var x = document.getElementById("points").value;
-			 $.ajax({
-			  type: "POST",
-			  url: "some.php",
-			  data: { value: x }
-			  }).done(function( msg ) {
-			  alert( "Data Saved: " + msg );
-			});
-		}
-
-		function mute(){
-				$.ajax({
-				  url: 'mute.php',
-				  success: function(data){ alert(data);}
-				});
-		}
-		</script>
-
-
-
-	</body>        
-	</html>
+</div>
+</body>
+</html>
