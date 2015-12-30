@@ -1,29 +1,34 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Home control, controls your room light, fan, pc volume and power with an arduino and an web server in your pc.
 
-### What is this repository for? ###
+### Home Control ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Version: 1.01
 
-### How do I get set up? ###
+### Componetes needed ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+##### Hardware ####
 
-### Contribution guidelines ###
+* Arduino
+* Arduino Ethernet Shield
+* Arduino Relay Module
+* DHT11 temperaute sensor.
 
-* Writing tests
-* Code review
-* Other guidelines
+#### Software ####
+
+* Windows OS
+* Apache server with php (xampp if you don't want trouble, but)
+
+### Configuration ###
+
+### Acess ###
+
+* Put the "webServer" folder int httpdocs folder in your Apache Server.
+* Acess in localhost/webcontrol
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Owner: Wellington Oliveira: well.oliveira.snt@gmail.com
+* Facebook: well.oliveira.snts
+* Twitter (Portugueses shit talks): oliveiraswell
