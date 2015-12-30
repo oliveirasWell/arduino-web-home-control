@@ -110,27 +110,29 @@
         function atualizaLight(){
             if(light == 0) {
                 document.getElementById('s_li').innerHTML = "on";
+                $('#s_li').prop( "checked", true );
             }else{
                 document.getElementById('s_li').innerHTML = "off";
+                $('#s_li').prop( "checked", false );
             }
         }
 
         function atualizaFan(){
             if(fan == 0){
                 document.getElementById('s_fa').innerHTML = "on";
+                $('#s_fa').prop( "checked", true );
             }else{
                 document.getElementById('s_fa').innerHTML = "off";
+                $('#s_fa').prop( "checked", false );
             }
         }
 
-        function startTime(autoChar){
-            //if(autoChar == '2'){ $('.slider').slider(); setTimeout(function(){startTime('1'); }, 2000);}
+        function startTime(){
             $.ajax({
                 url: 'get.php',
                 success: function(data){
                     //alert(data);
-                    var txt = data;
-                    txt = txt.split("\n");
+                    var txt = data.split("\n");
                     light = txt[0];
                     fan = txt[1];
                     temperature = txt[2];
@@ -142,7 +144,7 @@
                     document.getElementById('TE').innerHTML =  Math.round(temperature.trim()) + 'º';
                     document.getElementById('HU').innerHTML = Math.round(humidity.trim())+ '%';
 
-                    if(autoChar == '1') setTimeout(function(){startTime('1')}, 10000);
+                    setTimeout(function(){startTime('1')}, 10000);
                 }
             });
         }
@@ -150,7 +152,7 @@
         function monitor() {
             $.ajax({
                 url: 'monitor.php',
-                success: function(data){ alert(data);}
+                done: function(data){ alert(data);}
             });
         }
 
@@ -174,48 +176,55 @@
         }
 
         window.onload = function(){
-            startTime('1');
+            startTime();
         };
     </script>
 </head>
 <body class="back">
 <div class="container">
     <nav class="navbar navbar-default" style="margin-top: 2%">
-        <div class="container-fluid">
+        <div class="container-fluid " style="color: #315481">
             <div class="navbar-header text-center" style="padding-left: 5%;" >
-
-
-                <ul class="nav navbar-nav">
-
+                <ul class="nav navbar-nav ">
                     <li div class="navbar-brand visible-xs-block" style="margin-left: 17%;">
                     </li>
                     <li>
-                        <p class="navbar-brand" hef="#" id="TE">Loading Temperature</p>
+                        <a href="#" class="navbar-brand" hef="#" id="TE" style="color: #315481;">Loading Temperature</a>
                     </li>
                     <li>
-                        <p class="navbar-brand" hef="#" id="HU">Loading Humidity</p>
+                        <a href="#" class="navbar-brand" hef="#" id="HU" style="color: #315481;">Loading Humidity</a>
                     </li>
                 </ul>
             </div>
 
             <div id="navbar" class="navbar-collapse collapse">
-                <a class="navbar-brand navbar-right" style="padding-right: 5%" href="#">Arduino Web Control</a>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="text-center" style="padding-right: 5%;color: #315481" href="#">Arduino</a>
+                    </li>
+                    <li>
+                        <a class="text-center" style="padding-right: 5%;color: #315481" href="#">Web</a>
+                    </li>
+                    <li>
+                        <a class="text-center" style="padding-right: 5%;color: #315481" href="#">Control</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <div class="jumbotron">
+    <div class="jumbotron"  style="padding-top: 10px;padding-bottom: 10px">
         <div class="media row">
             <div class="col-md-5 col-xs-12 list-group-item col-centered">
                 <div class="media-right media-middle">
-                    <img onclick="toGet('a');" src="bulb.png" width="75px;">
+                    <img src="bulb.png" width="75px;">
                 </div>
                 <div class="media-body text-center">
                     <p></p>
-                    <div data-toggle="buttons" style="margin-top: 5%">
+                    <div data-toggle="buttons" style="margin-top: 5%" onclick="toGet('a');">
                         <label class="btn btn-lg btn-primary btnLgg">
                             <input type="checkbox" autocomplete="off">
-                            <label id="s_li">Light</label>
+                            <label id="s_li" >Light</label>
                         </label>
                     </div>
                 </div>
@@ -225,11 +234,11 @@
         <div class="media row">
             <div class=" col-md-5 col-xs-12 list-group-item col-centered">
                 <div class="media-right media-middle">
-                    <img onclick="toGet('b');" src="fan.png" width="75px;">
+                    <img src="fan.png" width="75px;">
                 </div>
                 <div class="media-body text-center">
                     <p></p>
-                    <div data-toggle="buttons" style="margin-top: 5%">
+                    <div data-toggle="buttons" style="margin-top: 5%" onclick="toGet('b');" >
                         <label class="btn btn-lg btn-primary btnLgg">
                             <input type="checkbox" autocomplete="off" checked>
                             <label id="s_fa">Fan</label>
@@ -294,7 +303,7 @@
 
     <footer class="footer">
         <div class="container text-center">
-            <a href="https://bitbucket.org/oliveiraswell/arduino-web-home-control" class="text-muted ">well.oliveira.snt@gmail.com</a>
+            <a href="https://bitbucket.org/oliveiraswell/arduino-web-home-control" class="text-muted " style="color: ;">well.oliveira.snt@gmail.com</a>
         </div>
     </footer>
 
