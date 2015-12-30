@@ -25,6 +25,9 @@ Home control, controls your room light, fan, pc volume and power with an arduino
 * Put the "webServer" folder int httpdocs folder in your Apache Server.
 * Acess in localhost/webcontrol
 
-* Owner: Wellington Oliveira: well.oliveira.snt@gmail.com
+##### Owner ##### 
+
+Wellington Oliveira: well.oliveira.snt@gmail.com
+
 * Facebook: well.oliveira.snts
 * Twitter (Portugueses shit talks): oliveiraswell
