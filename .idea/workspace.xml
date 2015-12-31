@@ -35,8 +35,8 @@
       <file leaf-file-name="webServerRelay2.ino" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webServerRelay2/webServerRelay2.ino">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.716502">
-              <caret line="230" column="24" selection-start-line="230" selection-start-column="24" selection-end-line="230" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.7122708">
+              <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -228,7 +228,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451521046099</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Guarda estado das luzes ou fan mesmo se cair a energia">
+      <created>1451539241791</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1451539241791</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -409,8 +415,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webServerRelay2/webServerRelay2.ino">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.716502">
-          <caret line="230" column="24" selection-start-line="230" selection-start-column="24" selection-end-line="230" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.7122708">
+          <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
           <folding />
         </state>
       </provider>

@@ -58,7 +58,7 @@ int previous = LOW;    // the previous reading from the input pin
 // the follow variables are long's because the time, measured in miliseconds,
 // will quickly become a bigger number than can be stored in an int.
 long time = 0;         // the last time the output pin was toggled
-long debounce = 200;   // the debounce time, increase if the output flickers
+long debounce = 500;   // the debounce time, increase if the output flickers
 
 
 void setup() {
