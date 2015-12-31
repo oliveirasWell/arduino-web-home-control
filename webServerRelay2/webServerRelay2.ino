@@ -36,6 +36,7 @@ EthernetClient client;
 
 #define DHTPIN 2
 #define DHTTYPE DHT11   // DHT 11
+#define BUTTON 3
 DHT dht(DHTPIN, DHTTYPE);
 
 char stringIN[500] = "";
@@ -51,6 +52,15 @@ int counter=1800000;
 
 bool auxB;
 
+int reading;           // the current reading from the input pin
+int previous = LOW;    // the previous reading from the input pin
+
+// the follow variables are long's because the time, measured in miliseconds,
+// will quickly become a bigger number than can be stored in an int.
+long time = 0;         // the last time the output pin was toggled
+long debounce = 200;   // the debounce time, increase if the output flickers
+
+
 void setup() {
     // Open serial communications and wait for port to open:
     Serial.begin(9600);
@@ -60,6 +70,7 @@ void setup() {
 
     dht.begin();
 
+    pinMode(BUTTON, INPUT);
     pinMode(FAN, OUTPUT);
     pinMode(LIGHT, OUTPUT);
 
@@ -95,6 +106,9 @@ void loop() {
     bool writeFlag = false;
     // listen for incoming clients
     client = server.available();
+
+    reading = digitalRead(BUTTON);
+
     if (client) {
         Serial.println("new client");
         // an http request ends with a blank line
@@ -210,6 +224,13 @@ void loop() {
    counter++;
   } */
     }
+    if (reading == HIGH && previous == LOW && millis() - time > debounce) {
+        light = !light;
+        digitalWrite(LIGHT, light);
+        EEPROM.write(addrLi, light);
+        time = millis();
+    }
+
 }
 
 float CheckTemp(){
