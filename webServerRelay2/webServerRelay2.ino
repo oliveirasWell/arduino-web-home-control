@@ -177,6 +177,7 @@ void loop() {
             //client.println("</font>");
 
             auxB = EEPROM.read(addrFa);
+            Serial.println();
             Serial.print("Enviada as informacoes");
             Serial.print("Memoria FA: ");
             Serial.println(auxB);
