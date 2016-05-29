@@ -19,8 +19,8 @@ int addr_light = 1;
 long tempo = 0;
 long debounce = 500;
 
-const char *ssid = "WELL";
-const char *password = "2303wellington";
+const char *ssid = "xxx";
+const char *password = "xxxxxx";
 
 IPAddress ip(192, 168, 1, 177);
 IPAddress gateway(192, 168, 1, 1);
